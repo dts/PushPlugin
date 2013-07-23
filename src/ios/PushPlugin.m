@@ -33,15 +33,15 @@
 @synthesize callbackId;
 @synthesize notificationCallbackId;
 @synthesize callback;
-
+/*
 - (void)dealloc
 {
-    [notificationMessage release];
+  //    [notificationMessage release];
     self.notificationCallbackId = nil;
     self.callback = nil;
 
-    [super dealloc];
-}
+    // [super dealloc];
+    }*/
 
 - (void)unregister:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
 {
@@ -51,11 +51,13 @@
     [self successWithMessage:@"unregistered"];
 }
 
-- (void)register:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
+- (void)register:(CDVInvokedUrlCommand *)command  ; // NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
 {
-	self.callbackId = [arguments pop];
+	self.callbackId = command.callbackId;
 
     UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeNone;
+    NSDictionary * options = [command argumentAtIndex:0];
+    
     id badgeArg = [options objectForKey:@"badge"];
     id soundArg = [options objectForKey:@"sound"];
     id alertArg = [options objectForKey:@"alert"];
